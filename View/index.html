@@ -1,1023 +1,422 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>At Ease: Simplify Things</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="atfavicon.png">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  <style>
+  body {
+      font: 400 15px/1.8 Lato, sans-serif;
+      color: #777;
+  }
+  h3, h4 {
+      margin: 10px 0 30px 0;
+      letter-spacing: 8px;      
+      font-size: 20px;
+      color: #111;
+  }
+  .container {
+      padding: 80px 120px;
+  }
+  .person {
+      border: 10px solid transparent;
+      margin-bottom: 25px;
+      width: 80%;
+      height: 80%;
+      opacity: 0.7;
+  }
+  .person:hover {
+      border-color: #f1f1f1;
+  }
+  .carousel-inner img {
+      -webkit-filter: grayscale(90%);
+      filter: grayscale(90%); /* make all photos black and white */ 
+      width: 100%; /* Set width to 100% */
+      margin: auto;
+  }
+  .carousel-caption h3 {
+      color: #fff !important;
+  }
+  @media (max-width: 600px) {
+    .carousel-caption {
+      display: none; /* Hide the carousel text when the screen is less than 600 pixels wide */
+    }
+  }
+  .bg-1 {
+      background: #2d2d30;
+      color: #bdbdbd;
+  }
+  .bg-1 h3 {color: #fff;}
+  .bg-1 p {font-style: italic;}
+  .list-group-item:first-child {
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+  }
+  .list-group-item:last-child {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+  }
+  .thumbnail {
+      padding: 0 0 15px 0;
+      border: none;
+      border-radius: 0;
+  }
+  .thumbnail p {
+      margin-top: 15px;
+      color: #555;
+  }
+  .btn {
+      padding: 10px 20px;
+      background-color: #333;
+      color: #f1f1f1;
+      border-radius: 0;
+      transition: .2s;
+  }
+  .btn:hover, .btn:focus {
+      border: 1px solid #333;
+      background-color: #fff;
+      color: #000;
+  }
+  .modal-header, h4, .close {
+      background-color: #333;
+      color: #fff !important;
+      text-align: center;
+      font-size: 30px;
+  }
+  .modal-header, .modal-body {
+      padding: 40px 50px;
+  }
+  .nav-tabs li a {
+      color: #777;
+  }
+  #googleMap {
+      width: 100%;
+      height: 400px;
+      -webkit-filter: grayscale(100%);
+      filter: grayscale(100%);
+  }  
+  .navbar {
+      font-family: Montserrat, sans-serif;
+      margin-bottom: 0;
+      background-color: #2d2d30;
+      border: 0;
+      font-size: 11px !important;
+      letter-spacing: 4px;
+      opacity: 0.9;
+  }
+  .navbar li a, .navbar .navbar-brand { 
+      color: #d5d5d5 !important;
+  }
+  .navbar-nav li a:hover {
+      color: #fff !important;
+  }
+  .navbar-nav li.active a {
+      color: #fff !important;
+      background-color: #29292c !important;
+  }
+  .navbar-default .navbar-toggle {
+      border-color: transparent;
+  }
+  .open .dropdown-toggle {
+      color: #fff;
+      background-color: #555 !important;
+  }
+  .dropdown-menu li a {
+      color: #000 !important;
+  }
+  .dropdown-menu li a:hover {
+      background-color: red !important;
+  }
+  footer {
+      background-color: #2d2d30;
+      color: #f5f5f5;
+      padding: 32px;
+  }
+  footer a {
+      color: #f5f5f5;
+  }
+  footer a:hover {
+      color: #777;
+      text-decoration: none;
+  }  
+  .form-control {
+      border-radius: 0;
+  }
+  textarea {
+      resize: none;
+  }
 
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANgGouY4dKW6SQ8UaaNJXxXvJdxLIAZ1E&callback=initMap"></script>
-<!--<link rel="icon" href="">-->
+  .videoInsert {
+    position: absolute; 
+    right: 0; 
+    bottom: 0;
+    min-width: 100%; 
+    min-height: 100%;
+    width: auto; 
+    height: auto; 
+    z-index: -100;
+    background-size: cover;
+    overflow: hidden;
+}
+  </style>
 </head>
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
 
-<style>
-
-textarea:focus,
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="datetime"]:focus,
-input[type="datetime-local"]:focus,
-input[type="date"]:focus,
-input[type="month"]:focus,
-input[type="time"]:focus,
-input[type="week"]:focus,
-input[type="number"]:focus,
-input[type="email"]:focus,
-input[type="url"]:focus,
-input[type="search"]:focus,
-input[type="tel"]:focus,
-input[type="color"]:focus,
-.uneditable-input:focus {   
-  border-color: #ff1919;
-  box-shadow: 0 1px 1px rgba(255, 0, 0, 0.075) inset, 0 0 8px rgba(255, 0, 0, 0.6);
-  outline: 0 none;
-}
-*{
-	border-radius: 0px !important;
-}
-#shiftdown{
-	padding-top: 70px;
-}
-.well{
-	border-radius: 0px;
-}
-.navbar,.well{
-	background-color: rgb(255,255,255);
-	 -moz-box-shadow: 0px 1px 1px rgba(0,0,0,0.3);
-    -webkit-box-shadow: 0px 1px 1px rgba(0,0,0,0.3);
-   	box-shadow:0px 1px 1px rgba(0,0,0,0.3);
-	border-left: 3px solid rgba(255,0,0,0.7);
-}
-.nopadding{
-    padding: 0 !important;
-    margin: 0 !important;
-}
-#rlprevinput{
-    min-width:600px;
-}
-@media only screen and (max-width: 926px) {
-    .rlimage {
-	height:50px;
-	width: 180px;
-    }
-}
-@media only screen and (max-width: 886px) {
-    .rlimage {
-	height:50px;
-	width: 140px;
-    }
-}
-@media only screen and (max-width: 846px) {
-    #rlprevinput {
-	min-width: 500px;
-    }
-}
-@media only screen and (max-width: 767px) {
-	form.navbar-form{
-	text-align: center;
-	padding-left: 10%;
-	}
-	.rlimage{
-    padding-left: 30%;
-    width: 180px;
-    height: 50px;
-  	}
-  	#shiftdown{padding-top: 130px;
-
-  	}
-  	#resultscolumn{padding-left: 0px;}
-}
-@media only screen and (max-width: 613px) {
-	form.navbar-form{
-	text-align: center;
-	padding-left: 5%;
-	}	
-    #rlprevinput {
-	min-width: 400px; 
-    }
-}
-@media only screen and (max-width: 497px) {
-	form.navbar-form{
-	text-align: center;
-	padding-left: 5%;
-	}
-	.rlimage{
-	padding-left: 20%;
-  	}
-	#rlprevinput {
-	min-width: 300px; 
-    }
-}
-@media only screen and (max-width: 358px) {
-	form.navbar-form{
-	text-align: center;
-	padding-left: 5%;
-	}
-	.rlimage{
-	padding-left: 20%;
-  	}
-	#rlprevinput {
-	min-width: 240px; 
-    }
-}
-@media only screen and (max-width: 293px) {
-	form.navbar-form{
-	text-align: center;
-	padding-left: 5%;
-	}
-	.rlimage{
-	padding-left: 10%;
-  	}
-	#rlprevinput {
-	min-width: 180px; 
-    }
-}
-       #map {
-        height: 600px;
-        width: 100%;
-       }
-
-</style>
-
-<body style="background-color: rgba(0,0,0,0.07);">
-
-
-<header></header>
+<!-- Nav (The fixed Section) -->
 <nav class="navbar navbar-default navbar-fixed-top">
-	<div class="container-fluid">
-    	<div class="navbar-header rlimage">
-      		<a class="navbar-brand nopadding rlimage" href="#">
-        	<img alt="Brand" src="logo_main.png" style="width:220px;height:50px;padding-top: 5px;" class="rlimage img-responsive">
-      		</a>
-    	</div>
-    	<form class="navbar-form" role="search">
-		<div class="input-group">
-    		<input type="text" min="0" max="5" class="form-control input-sm" list="list1" id="rlprevinput" placeholder="Search text" name="abc" >
-    		<datalist id="list1" ></datalist>
-    		<span class="input-group-btn" style="width:0;">
-        	<button class="btn btn-default "  style="border:2px solid #c7c5c5;" type="button"  id="submitBtn"><i class="glyphicon glyphicon-search"></i></button>
-    		</span>
-		</div>
-		</form>
-	</div>
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#myPage" style="padding: 0px;margin: 0px;"><img alt="Brand" src="ateaselogo.png" style="width:150px;height:50px;"></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#myPage">HOME</a></li>
+        <li><a href="#about">ABOUT</a></li>
+        <li><a href="#login">LOGIN</a></li>
+        <li><a href="#contact">CONTACT</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
+      </ul>
+    </div>
+  </div>
 </nav>
 
-<div class="container-fluid">
+<!--  (The Main Section) -->
+<div style="height: 700px;width: 100%;padding-top: 20px;">
+  <img alt="Brand" src="quotes.png" style="padding-top:50px;margin-top: 50px;border:0px;" id="frontPageImage" class="img-responsive">
+  <div class="wrapper">
+    <video class="videoInsert" autoplay="autoplay" loop>
+      <source src="vidd.webm" type="video/webm">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</div>
 
-
-<div class="row" id="shiftdown">
-
-
-	<div class="col-sm-8 well well-sm">
-    <div id="map"></div>
-  
-	</div>
-	
-	<div class="col-sm-4" style="padding-right: 0px;" id="resultscolumn">
-	<div class="well well-sm" >
-
-
-
-    
-    <button type="button" class="btn btn-info" style="margin-left:0px;" id="btn_recommend_olduser">Recommend</button>
-    
-    <div class="col-md-12" id="wholenewdiv1">
-    
+<!-- Container (The about Section) -->
+<div id="about" class="container text-center">
+  <h3>THE CONTENT</h3>
+  <p><em>We love to ease life!</em></p>
+  <p>Life is huge in itself but short to an individual. Some things are dispersed beyond our reach and our efforts are too weak to meet those ends. Technology has made life easier. The more we dive into the depths of technology, we unleash the fruit of ease. We here have brought you closer to your ease by bringing everything on one table so you can easily move your hands around almost everything you need. From nearby restaurant, cafes and bars to medical shops, petrol pumps and grocery shops with direction, precision and ease for you to choose with an efficient UI at the frontend. Reviews about the website is awaited by our visiting customers in our 'BLOG' route. Feel free to give suggestions and improvement features that can be implemented for a better change. 'LOGIN' to the world of laziness @ease your life.</p>
+  <br>
+  <div class="row">
+    <div class="col-sm-4">
+      <a href="#demo" data-toggle="collapse">
+        <img src="developer.jpg" class="img-circle person" alt="Vishal Bisht" width="255" height="255">
+      </a>
     </div>
-    
+    <div class="col-sm-4">
+      <br>
+      <p style="text-align: left;"><strong style="text-decoration: underline;">Name</strong>&nbsp; Vishal Bisht</p>
+      <p style="text-align: left;"><strong style="text-decoration: underline;">Email</strong> &nbsp; vishalbisht@fico.com</p>
+      <p style="text-align: left;"><strong style="text-decoration: underline;">Phone</strong>&nbsp; +91-8377088616</p>
+      <p style="text-align: left;"><strong>Passionate Web Developer and Learning new Technologies.</strong></p>
+    </div>
+  </div>
+</div>
 
-	</div>
-	<div>
-    
-</div> <!-- row-main ends -->
+<!-- Container (login Section) -->
+<div id="login" class="bg-1">
+  <div class="container">
+    <h3 class="text-center">LOGIN @EASE<hr></h3>
+    <div class="row">
+      <div class="col-sm-6" style="border: 1px solid rgba(255,255,255,0.9); background-image: url('imagelogin.jpg');background-repeat:repeat-y;background-size: 100%;height: 450px;">
+        <form>
+          <br><br>
+          <h3 class="text-center">LOGIN<hr></h3>
+          <br>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input id="email" type="text" class="form-control" name="username" placeholder="Username">
+          </div>
+          <br>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input id="password" type="password" class="form-control" name="password" placeholder="Password">
+          </div>
+          <br>
+          <p>Friday 27 November 2015</p>
+          <hr>
+          <button class="btn" id="login_btn">LOG IN @Ease</button>
+        </form>
+      </div>
+      <div class="col-sm-6" style="border: 1px solid rgba(255,255,255,0.9); background-image: url('imagesignup.png');background-repeat:repeat-y;background-size: 100% ;height: 450px;">
+        <form>
+          <br><br>  
+          <h3 class="text-center">SIGNUP<hr></h3>
+          <br>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input id="email" type="text" class="form-control" name="email" placeholder="Email">
+            <input id="email" type="text" class="form-control" name="username" placeholder="Username">
+          </div>
+          <br>
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+            <input id="password" type="password" class="form-control" name="password" placeholder="Password">
+          </div>
+          <br>
+          <hr style="margin-top: 13px">
+          <button class="btn" id="signup_btn">SIGN UP @Ease</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
+<!-- Container (Contact Section) -->
+<div id="contact" class="container">
+  <h3 class="text-center">Contact</h3>
+  <p class="text-center"><em>We love our fans!</em></p>
 
-</div> <!-- container-fluid -->
+  <div class="row">
+    <div class="col-md-4">
+      <p>Fan? Drop a note.</p>
+      <p><span class="glyphicon glyphicon-map-marker"></span>Bangalore, IND</p>
+      <p><span class="glyphicon glyphicon-phone"></span>Phone: +91 8377088616</p>
+      <p><span class="glyphicon glyphicon-envelope"></span>Email: vishalbisht@fico.com</p>
+    </div>
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-sm-6 form-group">
+          <input class="form-control" id="name_blog" placeholder="Name" type="text" required>
+        </div>
+        <div class="col-sm-6 form-group">
+          <input class="form-control" id="email_blog" placeholder="Email" type="email" required>
+        </div>
+      </div>
+      <textarea class="form-control" id="comments_blog" placeholder="Comment" rows="5"></textarea>
+      <br>
+      <div class="row">
+        <div class="col-md-12 form-group">
+          <button class="btn pull-right" id="submit_blog" type="submit">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <h3 class="text-center">Reviews From You</h3>  
+  <ul class="nav nav-tabs" id="blog_tab_name">
+    <li class="active"><a data-toggle="tab" href="#home">Vishal</a></li>
+    <!-- <li><a data-toggle="tab" href="#menu1">Chandler</a></li> -->
+  </ul>
 
+  <div class="tab-content" id="blog_tab">
+    <div id="home" class="tab-pane fade in active">
+      <h2>Vishal Bisht, Manager</h2>
+      <p>Man, we've been on the road for some time now. Looking forward for some of your suggestions. Feel free.</p>
+    </div>
+    <!-- <div id="menu1" class="tab-pane fade">
+      <h2>Chandler Bing, Guitarist</h2>
+      <p>Always a pleasure people! Hope you enjoyed it as much as I did. Could I BE.. any more pleased?</p>
+    </div> -->
+  </div>
+</div>
 
+<!-- Add Google Maps -->
+<div id="googleMap"></div>
+<script>
+function myMap() {
+var myCenter = new google.maps.LatLng(12.9716, 77.5946);
+var mapProp = {center:myCenter, zoom:12, scrollwheel:false, draggable:false, mapTypeId:google.maps.MapTypeId.ROADMAP};
+var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+var marker = new google.maps.Marker({position:myCenter});
+marker.setMap(map);
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANgGouY4dKW6SQ8UaaNJXxXvJdxLIAZ1E&callback=myMap"></script>
+
+<!-- Footer -->
+<footer class="text-center">
+  <a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TO TOP">
+    <span class="glyphicon glyphicon-chevron-up"></span>
+  </a><br><br>
+  <p>Website Design Made by Vishal Bisht</p> 
+</footer>
 
 <script>
+$(document).ready(function(){
 
-function CenterControl(controlDiv, map) {
+  // Initialize Tooltip
+  $('[data-toggle="tooltip"]').tooltip(); 
+  // Add smooth scrolling to all links in navbar + footer link
+  $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+    // Make sure this.hash has a value before overriding default behavior
+    if (this.hash !== "") {
+      // Prevent default anchor click behavior
+      event.preventDefault();
+      // Store hash
+      var hash = this.hash;
+      // Using jQuery's animate() method to add smooth page scroll
+      // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 900, function(){
+        // Add hash (#) to URL when done scrolling (default click behavior)
+        window.location.hash = hash;
+      });
+    } // End if
+  });
 
-        // Set CSS for the control border.
-        var controlUI = document.createElement('div');
-        controlUI.style.backgroundColor = '#fff';
-        controlUI.style.border = '2px solid #fff';
-        controlUI.style.borderRadius = '3px';
-        controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
-        controlUI.style.cursor = 'pointer';
-        controlUI.style.marginBottom = '10px';
-        controlUI.style.marginRight = '10px';
-        controlUI.style.textAlign = 'center';
-        controlUI.title = 'Click to LOCATE me';
-        controlDiv.appendChild(controlUI);
+})
 
-        // Set CSS for the control interior.
-        var controlText = document.createElement('div');
-        controlText.style.color = 'rgb(25,25,25)';
-        controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
-        controlText.style.fontSize = '14px';
-        controlText.style.lineHeight = '30px';
-        controlText.style.paddingLeft = '5px';
-        controlText.style.paddingRight = '5px';
-        controlText.innerHTML = 'Locate ';
-        var icon = document.createElement("span");
-        icon.className ="glyphicon glyphicon-send";
-        controlText.appendChild(icon);
-        controlUI.appendChild(controlText);
+$(function() {
+    $("#submit_blog").click(function() {
+         
+        var name_blog = document.getElementById("name_blog").value;
+        var email_blog = document.getElementById("email_blog").value;
+        var comments_blog = document.getElementById("comments_blog").value;
+        console.log(name_blog);
+        var data = {};
+        data.name = name_blog;
+        data.email = email_blog;
+        data.comment = comments_blog;
+        $.ajax({
+          type: 'POST',
+          data: JSON.stringify(data),
+          contentType: 'application/json',
+          url: 'http://localhost:8081/frontend_blog',            
+          success: function(data) {
+            $('#name_blog').val('');
+            $('#email_blog').val('');
+            $('#comments_blog').val('');
 
-        // Setup the click event listeners: simply set the map to Chicago.
-        controlUI.addEventListener('click', function() {
-          map.setCenter(chicago);
+            for(var counter = 0; counter <data.length;counter++)
+            {
+              var li=document.createElement("li");
+              var a=document.createElement("a");
+              a.href = "#menu" + counter;
+              a.setAttribute("data-toggle","tab");
+              a.innerHTML = data[counter].name;
+              li.appendChild(a);
+              document.getElementById("blog_tab_name").appendChild(li);
+
+              var div = document.createElement("div");
+              div.id = "menu" + counter;
+              div.className = "tab-pane fade";
+              var h2 = document.createElement("h2");
+              h2.innerHTML = data[counter].name + " , " + data[counter].email;
+              var p = document.createElement("p");
+              p.innerHTML = data[counter].comment;
+              div.appendChild(h2);
+              div.appendChild(p);
+              document.getElementById("blog_tab").appendChild(div);
+            }
+          }
         });
-
-      }
-
-function geocodeLatLng(geocoder, map, infowindow) {
-	var input = document.getElementById('latlng').value;
-	var latlngStr = input.split(',', 2);
-	var latlng = {lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1])};
-
-	geocoder.geocode({'location': latlng}, function(results, status) {
-    	if (status === 'OK') {
-      		if (results[1]) {
-        		map.setZoom(11);
-        		var marker = new google.maps.Marker({
-          			position: latlng,
-          			map: map
-        		});
-        	infowindow.setContent(results[1].formatted_address);
-        	infowindow.open(map, marker);
-      		} 
-      		else {window.alert('No results found');}
-    	} 
-    	else {window.alert('Geocoder failed due to: ' + status);}
-  	});
-}
-
-
-/*window.onload = function() {
-	
-};*/
-
-		
-function success(pos) {
-  	var crd = pos.coords;
-
-  	console.log('Your current position is:');
-  	console.log("Latitude :" + crd.latitude);
-  	console.log("Longitude:" + crd.longitude);
-  	console.log("More or less" + crd.accuracy + " meters.");
-  	return crd;
-};
-
-function error(err) {
-  	alert("Timeout Occurred. Please reload the page");
-  	console.log(`${err.code} and message ${err.message}`);
-};
-
-
-
-var oldMarker;
-
-function initMap() {
-	
-	var options = {
-  		enableHighAccuracy: true,
-  		timeout: 10000,
-  		maximumAge: 0
-		};
-
-	var crd = navigator.geolocation.getCurrentPosition(success, error, options);
-	//console.log(crd);
-	var latlng = new google.maps.LatLng(20.5937,78.9629);
-    var myOptions = {
-        zoom: 3,
-        center: latlng,
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-   		mapTypeControl: true,
-        mapTypeControlOptions: {
-            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-            position: google.maps.ControlPosition.LEFT_TOP
-          },
-        zoomControl: true,
-        zoomControlOptions: {
-            position: google.maps.ControlPosition.LEFT_BOTTOM
-        },
-        scaleControl: true,
-        streetViewControl: true,
-        streetViewControlOptions: {
-            position: google.maps.ControlPosition.LEFT_BOTTOM
-        },
-        fullscreenControl: true,
-        styles: [
-            {elementType: 'geometry', stylers: [{color: '#1d2c4d'}]},
-            {elementType: 'labels.text.stroke', stylers: [{color: '#1a3646'}]},
-            {elementType: 'labels.text.fill', stylers: [{color: '#8ec3b9'}]},
-            {
-              featureType: 'administrative.country',
-              elementType: 'geometry.stroke',
-              stylers: [{color: '#4b6878'}]
-            },
-            {
-              featureType: 'administrative.land_parcel',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#64779e'}]
-            },
-            {
-              featureType: 'administrative.province',
-              elementType: 'geometry.stroke',
-              stylers: [{color: '#4b6878'}]
-            },
-            {
-              featureType: 'landscape.man_made',
-              elementType: 'geometry.stroke',
-              stylers: [{color: '#334e87'}]
-            },
-            {
-              featureType: 'landscape.natural',
-              elementType: 'geometry',
-              stylers: [{color: '#023e58'}]
-            },
-            {
-              featureType: 'poi',
-              elementType: 'geometry',
-              stylers: [{color: '#283d6a'}]
-            },
-            {
-              featureType: 'poi',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#6f9ba5'}]
-            },
-            {
-              featureType: 'poi',
-              elementType: 'labels.text.stroke',
-              stylers: [{color: '#1d2c4d'}]
-            },
-            {
-              featureType: 'poi.park',
-              elementType: 'geometry.fill',
-              stylers: [{color: '#023e58'}]
-            },
-            {
-              featureType: 'poi.park',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#3C7680'}]
-            },
-            {
-              featureType: 'road',
-              elementType: 'geometry',
-              stylers: [{color: '#304a7d'}]
-            },
-            {
-              featureType: 'road',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#98a5be'}]
-            },
-            {
-              featureType: 'road',
-              elementType: 'labels.text.stroke',
-              stylers: [{color: '#1d2c4d'}]
-            },
-			{
-              featureType: 'road.highway',
-              elementType: 'geometry',
-              stylers: [{color: '#2c6675'}]
-            },
-			{
-              featureType: 'road.highway',
-              elementType: 'geometry.stroke',
-              stylers: [{color: '#255763'}]
-            },
-			{
-              featureType: 'road.highway',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#b0d5ce'}]
-            },
-			{
-              featureType: 'road.highway',
-              elementType: 'labels.text.stroke',
-              stylers: [{color: '#023e58'}]
-            },
-			{
-              featureType: 'transit',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#98a5be'}]
-            },
-			{
-              featureType: 'transit',
-              elementType: 'labels.text.stroke',
-              stylers: [{color: '#1d2c4d'}]
-            },
-			{
-              featureType: 'transit.line',
-              elementType: 'geometry.fill',
-              stylers: [{color: '#283d6a'}]
-            },
-			{
-              featureType: 'transit.station',
-              elementType: 'geometry',
-              stylers: [{color: '#3a4762'}]
-            },
-            {
-              featureType: 'water',
-              elementType: 'geometry',
-              stylers: [{color: '#0e1626'}]
-            },
-            {
-              featureType: 'water',
-              elementType: 'labels.text.fill',
-              stylers: [{color: '#4e6d70'}]
-            }
-        ]
-	};
-
-    var map = new google.maps.Map(document.getElementById("map"),myOptions);
-
-    var centerControlDiv = document.createElement('div');
-    var centerControl = new CenterControl(centerControlDiv, map);
-    centerControlDiv.index = 1;
-    map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(centerControlDiv);
-	
-    google.maps.event.addListener(map, 'click', function(event) {
-        placeMarker(event.latLng);
-    });
-
-    function placeMarker(location) {
-		var marker = new google.maps.Marker({
-            position: location,
-            map: map,
-            animation: google.maps.Animation.DROP,
-        });
-            
-        if (oldMarker != undefined){
-            oldMarker.setMap(null);
-        }
-        oldMarker = marker;
-    }
-
-    var geocoder = new google.maps.Geocoder;
-  	var infowindow = new google.maps.InfoWindow;
-    geocodeLatLng(geocoder, map, infowindow);
-}
     
-/*var $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};*/
-	$(function() {
-    	$("#btn_recommend_olduser").click(function() {
-    
-         
-         var a = document.getElementById("wholenewdiv1");
-                while(a.hasChildNodes()) {
-                a.removeChild(a.lastChild);
-                    }
-                var imgload =document.createElement("img");
-                imgload.src="{{ url_for('static',filename='3.gif')}}";
-                imgload.style.textAlign="left";
-                imgload.style.margin="50px";
-                imgload.style.width="40";
-                imgload.style.height="40";
-                document.getElementById("wholenewdiv1").appendChild(imgload);
-                
-         //var a = document.getElementById("wholenewdiv");
-         
-         $.ajax({
-            type: "GET",
-            url: $SCRIPT_ROOT + "/recommend_olduser",
-            contentType: "application/json; charset=utf-8",
-            data: { echo : "hello" },
-            success: function(data) {
-                var a1 = document.getElementById("wholenewdiv1");
-                while(a1.hasChildNodes()) {
-                a1.removeChild(a1.lastChild);
-                    }
-                list=data.value
-                console.log(list.length)
-                // list= data.value;
-                
-                // console.log(list.length);
-                // console.log(list[0]);
-                // console.log(list[0][1].replace(/'/g,''))
-                // console.log(list[0][0].replace(/'/g,''))
-               for( var i=1; i<list.length;i++)
-                {
-                
-                
-                var name1=list[i][0][0];
-                var name2=list[i][0][1];
-                var name3=list[i][0][2];
-                var name4=list[i][0][3];
-                
-                var divrow =document.createElement("div");
-                divrow.className="row well well-sm";
-                var divcol1 =document.createElement("div");
-                divcol1.className="col-md-4";
-                var divcol2 =document.createElement("div");
-                divcol2.className="col-md-8";
-                var a =document.createElement("a");
-                a.href = "#";
-                var img =document.createElement("img");
-                var h50=document.createElement("h5");
-                var h51=document.createElement("h5");
-                var h52=document.createElement("h5");
-                var h53=document.createElement("h5");
-                img.src="{{ url_for('static',filename='movie.jpg')}}";
-                img.style.textAlign="left";
-                img.style.width="120";
-                img.id=list[i][0][3];
-                var val = document.createAttribute("onclick");
-                val.value = "movieClick(this.id)";
-                img.setAttributeNode(val);
-                /*var elem = document.createElement("img");
-                elem.src = list[4];
-                /*list[i][0].replace(/'/g,'')
-                list[i][1].replace(/'/g,'')
-                list[i][2].replace(/'/g,'')
-                list[i][3].replace(/'/g,'')*/
-                
-                h50.innerHTML="Movie Title: "+name1;
-                h51.innerHTML="Genre: "+name2;
-                h52.innerHTML="Year of Release: "+name3;
-                h53.innerHTML="Movie ID.: "+name4;
-                divrow.appendChild(divcol1);
-                divrow.appendChild(divcol2);
-                divcol1.appendChild(a);
-                a.appendChild(img);
-                divcol2.appendChild(h50);
-                divcol2.appendChild(h51);
-                divcol2.appendChild(h52);
-                divcol2.appendChild(h53);
-                document.getElementById("wholenewdiv1").appendChild(divrow);
-                
-                
-                            
-            }
-        
-                               
-            }
-             
-                  
-            
-        });  
     });
   });
-$(function() {
-    $("#btn_recommend_newuser").click(function() {
-         
-         var a = document.getElementById("wholenewdiv1");
-                while(a.hasChildNodes()) {
-                a.removeChild(a.lastChild);
-                    }
-                
-         //var a = document.getElementById("wholenewdiv");
-         
-         $.ajax({
-            type: "GET",
-            url: $SCRIPT_ROOT + "/recommend_newuser",
-            contentType: "application/json; charset=utf-8",
-            data: { echo : "hello" },
-            success: function(data) {
-                list=data.value
-                console.log(list.length)
-                list= data.value;
-                
-                console.log(list.length);
-                console.log(list[0]);
-/*                console.log(list[0][1].replace(/'/g,''))
-                console.log(list[0][0].replace(/'/g,''))
-*/
-               for( var i=1; i<list.length;i++)
-                {
-                
-                
-                var name1=list[i][0][0];
-                var name2=list[i][0][1];
-                var name3=list[i][0][2];
-                var name4=list[i][0][3];
-                
-                var divrow =document.createElement("div");
-                divrow.className="row well well-sm";
-                var divcol1 =document.createElement("div");
-                divcol1.className="col-md-4";
-                var divcol2 =document.createElement("div");
-                divcol2.className="col-md-8";
-                var a =document.createElement("a");
-                a.href = "#";
-                var img =document.createElement("img");
-                var h50=document.createElement("h5");
-                var h51=document.createElement("h5");
-                var h52=document.createElement("h5");
-                var h53=document.createElement("h5");
-                img.src="{{ url_for('static',filename='movie.jpg')}}";
-                img.style.textAlign="left";
-                img.style.width="120";
-                img.id=list[i][0][3];
-                var val = document.createAttribute("onclick");
-                val.value = "movieClick(this.id)";
-                img.setAttributeNode(val);
-                /*var elem = document.createElement("img");
-                elem.src = list[4];
-                /*list[i][0].replace(/'/g,'')
-                list[i][1].replace(/'/g,'')
-                list[i][2].replace(/'/g,'')
-                list[i][3].replace(/'/g,'')*/
-                
-                h50.innerHTML="Movie Title: "+name1;
-                h51.innerHTML="Genre: "+name2;
-                h52.innerHTML="Year of Release: "+name3;
-                h53.innerHTML="Movie ID.: "+name4;
-                divrow.appendChild(divcol1);
-                divrow.appendChild(divcol2);
-                divcol1.appendChild(a);
-                a.appendChild(img);
-                divcol2.appendChild(h50);
-                divcol2.appendChild(h51);
-                divcol2.appendChild(h52);
-                divcol2.appendChild(h53);
-                document.getElementById("wholenewdiv1").appendChild(divrow);
-                
-                
-                            
-            }
-        
-                               
-            }
-             
-                  
-            
-        });  
-    });
-  });
-$(function() {
-    $("#btn_recommend").click(function() {
-         
-         var a = document.getElementById("wholenewdiv1");
-                while(a.hasChildNodes()) {
-                a.removeChild(a.lastChild);
-                    }
-                
-         //var a = document.getElementById("wholenewdiv");
-         
-         $.ajax({
-            type: "GET",
-            url: $SCRIPT_ROOT + "/recommend",
-            contentType: "application/json; charset=utf-8",
-            data: { echo : "hello" },
-            success: function(data) {
-                list= data.value;
-                console.log(list.length);
-                console.log(list[0]);
-                 for( var i=0; i<list.length;i++)
-                {
-                var divrow =document.createElement("div");
-                divrow.className="row well well-sm";
-                var divcol1 =document.createElement("div");
-                divcol1.className="col-md-4";
-                var divcol2 =document.createElement("div");
-                divcol2.className="col-md-8";
-                var a =document.createElement("a");
-                a.href = "#";
-                var img =document.createElement("img");
-                var h50=document.createElement("h5");
-                var h51=document.createElement("h5");
-                var h52=document.createElement("h5");
-                var h53=document.createElement("h5");
-                var h54=document.createElement("h5");
-                var h55=document.createElement("h5");
-                img.src="{{ url_for('static',filename='movie.jpg')}}";
-                img.style.textAlign="left";
-                img.style.width="80";
-                img.style.height="150";
-                img.id=list[i][1];
-                var val = document.createAttribute("onclick");
-                val.value = "movieClick(this.id)";
-                img.setAttributeNode(val);
-                var name1=list[i][0];
-                var name2=list[i][1];
-                var name3=list[i][2];
-                var name4=list[i][3];
-                var name5=list[i][4];
-                var name6=list[i][5];
-                h50.innerHTML="Average Rating: "+name1;
-                h51.innerHTML="Movie ID. : "+name2;
-                h52.innerHTML="No. of Times Rated : "+name3;
-                h53.innerHTML="Movie Title :"+name4;                                
-                h54.innerHTML="Release Date :"+name5;
-                h55.innerHTML="Movie Genre :"+name6;
-                divrow.appendChild(divcol1);
-                divrow.appendChild(divcol2);
-                divcol1.appendChild(a);
-                a.appendChild(img);
-                divcol2.appendChild(h50);
-                divcol2.appendChild(h51);
-                divcol2.appendChild(h52);
-                divcol2.appendChild(h53);
-                divcol2.appendChild(h54);
-                divcol2.appendChild(h55);
-                document.getElementById("wholenewdiv1").appendChild(divrow);
-            
-                }                  
-            }
-             
-                  
-            
-        });  
-    });
-  });
-$(function() {
-    $("#btnofquery").click(function() {
-         
-         //var a = document.getElementById("wholenewdiv");
-         var c1=document.getElementById("111").checked;
-         var c2=document.getElementById("112").checked;
-         var c3=document.getElementById("113").checked;
-         var c4=document.getElementById("114").checked;
-         var c5=document.getElementById("115").checked;
-         var d1=document.getElementById("11").value;
-         var d2=document.getElementById("12").value;
-         var d3=document.getElementById("13").value;
-         var d4=document.getElementById("14").value;
-         var d5=document.getElementById("15").value;
-         var d6=document.getElementById("16").value;
-         // alert(c1);
-         $.ajax({
-            type: "GET",
-            url: $SCRIPT_ROOT + "/querymaster",
-            contentType: "application/json; charset=utf-8",
-            data: { echo1:c1,echo2:c2,echo3:c3,echo4:c4,echo5:c5,decho1:d1,decho2:d2,decho3:d3,decho4:d4,decho5:d5,decho6:d6, },
-            success: function(data) {
-                        var a = document.getElementById("wholenewdiv");
-                while(a.hasChildNodes()) {
-                a.removeChild(a.lastChild);
-                    }
-                 list= data.value;
-                
-                console.log(list.length);
-               for( var i=0; i<list.length;i++)
-                {
-                var divrow =document.createElement("div");
-                divrow.className="row well well-sm";
-                var divcol1 =document.createElement("div");
-                divcol1.className="col-md-4";
-                var divcol2 =document.createElement("div");
-                divcol2.className="col-md-8";
-                var a =document.createElement("a");
-                a.href = "#";
-                var img =document.createElement("img");
-                var h50=document.createElement("h5");
-                var h51=document.createElement("h5");
-                var h52=document.createElement("h5");
-                var h53=document.createElement("h5");
-                var h54=document.createElement("h5");
-                var h55=document.createElement("h5");
-                img.src="{{ url_for('static',filename='movie.jpg')}}";
-                img.style.textAlign="left";
-                img.style.width="150";
-                img.id=list[i][1];
-                var val = document.createAttribute("onclick");
-                val.value = "movieClick(this.id)";
-                img.setAttributeNode(val);
-                var name1=list[i][0];
-                var name2=list[i][1];
-                var name3=list[i][2];
-                var name4=list[i][3];
-                var name5=list[i][4];
-                var name6=list[i][5];
-                h50.innerHTML="Average Rating: "+name1;
-                h51.innerHTML="Movie ID. : "+name2;
-                h52.innerHTML="No. of Times Rated : "+name3;
-                h53.innerHTML="Movie Title :"+name4;                                
-                h54.innerHTML="Release Date :"+name5;
-                h55.innerHTML="Movie Genre :"+name6;
-                divrow.appendChild(divcol1);
-                divrow.appendChild(divcol2);
-                divcol1.appendChild(a);
-                a.appendChild(img);
-                divcol2.appendChild(h50);
-                divcol2.appendChild(h51);
-                divcol2.appendChild(h52);
-                divcol2.appendChild(h53);
-                divcol2.appendChild(h54);
-                divcol2.appendChild(h55);
-                document.getElementById("wholenewdiv").appendChild(divrow);
-                
-                }
-                
-                               
-            }
-             
-                  
-            
-        });  
-    });
-  });
-$(function() {
-    $("#rlprevinput").keyup(function(event) {
-    	if(event.keyCode > 40 || event.keyCode == 32)
-    	{
-    	console.log(event.keyCode);
-        var datal= document.getElementById('list1');
-        var input = document.getElementById('rlprevinput');
-        /*alert("hello");*/
-         $.ajax({
-            type: "GET",
-            url: $SCRIPT_ROOT + "/autocomplete",
-            contentType: "application/json; charset=utf-8",
-            data: { echoValue: $('input[name="abc"]').val() },
-            success: function(data) {
-                console.log(data);
-                var options =  "";
-                list = data.value;
-                for(i = 0 ; i < list.length; i++ ) {
-                   var option = "<option value ='" + list[i] + "'>" + list[i] + "</option>";
-       				options = options + option;
-                }
-                $('#list1').html(options);
-            }
-       	});
-       	}     
-    });
-  });
-$(function() {
-    $("#submitBtn").click(function() {
-    	 var a = document.getElementById("wholenewdiv");
-    	 while(a.hasChildNodes()) {
-    	 	a.removeChild(a.lastChild);
-    	 }
-         $.ajax({
-            type: "GET",
-            url: $SCRIPT_ROOT + "/moviesupdate",
-            contentType: "application/json; charset=utf-8",
-            data: { echoValue: $('input[name="abc"]').val() },
-            success: function(data) {
-                list= data.value;
-                
-                console.log(list.length);
-                for( var i=0; i<list.length;i++)
-    			{
-    			var divrow =document.createElement("div");
-    			divrow.className="row well well-sm";
-    			var divcol1 =document.createElement("div");
-    			divcol1.className="col-md-4";
-    			var divcol2 =document.createElement("div");
-    			divcol2.className="col-md-8";
-    			var a =document.createElement("a");
-    			a.href = "#";
-    			var img =document.createElement("img");
-    			var h50=document.createElement("h5");
-    			var h51=document.createElement("h5");
-    			var h52=document.createElement("h5");
-    			var h53=document.createElement("h5");
-    			img.src="{{ url_for('static',filename='movie.jpg')}}";
-    			img.style.textAlign="left";
-                img.style.width="150";
-                img.id=list[i][3];
-                var val = document.createAttribute("onclick");
-                val.value = "movieClick(this.id)";
-                img.setAttributeNode(val);
-    			/*var elem = document.createElement("img");
-    			elem.src = list[4];*/
-    			var name1=list[i][0];
-    			var name2=list[i][1];
-    			var name3=list[i][2];
-    			var name4=list[i][3];
-    			h50.innerHTML="Movie Title: "+name1;
-    			h51.innerHTML="Genre: "+name2;
-    			h52.innerHTML="Year of Release: "+name3;
-    			h53.innerHTML="Movie ID.: "+name4;
-    			divrow.appendChild(divcol1);
-    			divrow.appendChild(divcol2);
-    			divcol1.appendChild(a);
-    			a.appendChild(img);
-    			divcol2.appendChild(h50);
-    			divcol2.appendChild(h51);
-    			divcol2.appendChild(h52);
-    			divcol2.appendChild(h53);
-    			document.getElementById("wholenewdiv").appendChild(divrow);
-                
-                
-                            
-    		}
-    			/*document.getElementById("placehere").appendChild(elem);*/
-             
-               	  
-            }
-        });     
-    });
-  });
-</script>
-<script type="text/javascript">
-var movieid;
-    function movieClick(name) {
-    var a = document.getElementById("wholenewdiv");
-    while(a.hasChildNodes()) {
-            a.removeChild(a.lastChild);
-            }
-    /*console.log(name);*/
-    $.ajax({
-            type: "GET",
-            url: $SCRIPT_ROOT + "/rate",
-            contentType: "application/json; charset=utf-8",
-            data: { echoValue: name },
-            success: function(data) {
-                console.log(data.value);
-                list=data.value;
-                console.log(list.length);
-                console.log(list[0][0]);
-                console.log(list[0][1]);
-                console.log(list[0][2]);
-                console.log(list[0][3]);
-                var divrow =document.createElement("div");
-                divrow.className="row well well-sm";
-                var divcol1 =document.createElement("div");
-                divcol1.className="col-md-4";
-                var divcol2 =document.createElement("div");
-                divcol2.className="col-md-8";
-                var a =document.createElement("a");
-                a.href = "#";
-                var img =document.createElement("img");
-                var h50=document.createElement("h5");
-                var h51=document.createElement("h5");
-                var h52=document.createElement("h5");
-                var h53=document.createElement("h5");
-                img.src="{{ url_for('static',filename='movie.jpg')}}";
-                img.style.textAlign="left";
-                img.style.width="150";
-                img.id=list[0][1];
-                var val = document.createAttribute("onclick");
-                val.value = "movieClick(this.id)";
-                img.setAttributeNode(val);
-                var name1=list[0][0];
-                var name2=list[0][1];
-                movieid=name2;
-                var name3=list[0][2];
-                var name4=list[0][3];
-                h50.innerHTML="Movie Title: "+name1;
-                h51.innerHTML="Movie ID: "+name2;
-                h52.innerHTML="Average Rating: "+name3;
-                h53.innerHTML="No. of Times Rated: "+name4;
-                divrow.appendChild(divcol1);
-                divrow.appendChild(divcol2);
-                divcol1.appendChild(a);
-                a.appendChild(img);
-                divcol2.appendChild(h50);
-                divcol2.appendChild(h51);
-                divcol2.appendChild(h52);
-                divcol2.appendChild(h53);
-                document.getElementById("wholenewdiv").appendChild(divrow);
-                var divrow1 =document.createElement("div");
-                divrow1.className="row well well-sm";
-                var divcol11 =document.createElement("div");
-                divcol11.className="col-sm-8";
-                var divcol21 =document.createElement("div");
-                divcol21.className="col-sm-4";
-                var button = document.createElement("input");
-                var input=document.createElement("input");
-                input.type="text";
-                input.className="input-sm";
-                input.id="abc1";
-                button.className="btn btn-info";
-                button.value="Rate";
-                button.type="button";
-                var val = document.createAttribute("onclick");
-                val.value = "userrate(this.id)";
-                button.setAttributeNode(val);
-                divrow1.appendChild(divcol11);
-                divrow1.appendChild(divcol21);
-                divcol21.appendChild(button);
-                divcol11.appendChild(input);
-                document.getElementById("wholenewdiv").appendChild(divrow1);
-                
-            }
-    });
-                        
-    
-    }
-function userrate(name) {
-    var a = document.getElementById("wholenewdiv");
-     var id_of_rate  =document.getElementById("abc1").value;
-     
-    while(a.hasChildNodes()) {
-            a.removeChild(a.lastChild);
-            }
-    /*console.log(name);*/
-    $.ajax({
-            type: "GET",
-            url: $SCRIPT_ROOT + "/updaterating",
-            contentType: "application/json; charset=utf-8",
-            data: { echoValue: id_of_rate, echoValue1: movieid },
-            success: function(data) {
-                // console.log(data)
-                alert(data);
-                
-            }
-    });
-                        
-    
-    }
 </script>
 
 </body>

@@ -1,60 +1,78 @@
 var http = require("http");
-var Test = require('./testsCollection');
+var Blog_Info = require('./Blog_InfoCollection');
 var User = require('./firstcollectionCollection');
 require('./dbConnection');
 var express = require('express');
 var app = express();
-var path    = require("path");
+var path = require("path");
+var bodyParser = require('body-parser');
+app.use(bodyParser());
+
 
 app.use(express.static(__dirname + '/../View'));
-//Store all HTML files in view folder.
 app.use(express.static(__dirname + '/../Script'));
-//Store all JS and CSS in Scripts folder.
-
-
-
 app.get('/', function(request, response) {
+    response.sendFile('main.html');
+});
+app.get('/index', function(request, response) {
 	response.sendFile('index.html');
-    //response.sendFile(path.join(__dirname+'/index.html'));
 });
 
 
-
-app.set('views', __dirname + '/../View');
+/*app.set('views', __dirname + '/../View');
 app.set('view engine', 'html');
 app.engine('html', require('ejs').renderFile);
 app.get('/index', function(request, response) {
-	response.render('index.html');
+    response.render('index.html');
+});
+app.get('/', function(request, response) {
+    response.render('main.html');
+});*/
+
+app.post('/frontend_blog', function(request, response) {
+    
+    var BlogInfo = new Blog_Info({
+        name : request.body.name,
+        email: request.body.email,
+        comment : request.body.comment 
+    });
+    BlogInfo.save(function(err) {
+        if (!err) {
+            console.log('Info saved!');
+            Blog_Info.find({}).sort({_id: -1}).limit(6).exec(function (err, docs) {
+                if (!err){ 
+                    console.log(JSON.stringify(docs));
+                    response.send(docs);
+                } else {throw err;}
+            });
+        } else{ throw err; }
+    });
+    console.log("out??");
 });
 
 
 
-app.get('/addUser',function(request,response){
-    var testone = new Test({
-        id : 1,
-        name: 'Chris',
-        age : 21 
-    });
-    testone.save(function(err) {
-    if (err) throw err;
-        console.log('testone created!');
-    });
-    response.send('data added ' + testone.name);
 
-    // Generate file download
-    /*response.download('C:/Users/vishalbisht/Downloads/dms.txt');
-	response.json({
-        'myJson':'object'
-    });
-	response.redirect('/foo/bar');
-    response.redirect('http://example.com');
 
-    response.send(new Buffer('whoop'));
-    response.send({ some: 'json' });
-    response.send('<p>some html</p>');
-    response.status(404).send('Sorry, we cannot find that!');
-    response.status(500).send({ error: 'something blew up' });*/
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.get('/findAll', function(request, response) {
 
@@ -80,6 +98,19 @@ app.get('/findExisting', function(request, response) {
 
 app.get('/downloadfiles', function(request, response) {
     response.download('C:/Users/vishalbisht/Downloads/dms.txt');
+    // Generate file download
+    /*response.download('C:/Users/vishalbisht/Downloads/dms.txt');
+    response.json({
+        'myJson':'object'
+    });
+    response.redirect('/foo/bar');
+    response.redirect('http://example.com');
+
+    response.send(new Buffer('whoop'));
+    response.send({ some: 'json' });
+    response.send('<p>some html</p>');
+    response.status(404).send('Sorry, we cannot find that!');
+    response.status(500).send({ error: 'something blew up' });*/
 });
 
 
