@@ -368,6 +368,36 @@ $(document).ready(function(){
     } // End if
   });
 
+  $.ajax({
+          type: 'GET',
+          contentType: 'application/json',
+          url: 'http://localhost:8081/load_frontend_blog',            
+          success: function(data) {
+
+            for(var counter = 0; counter <data.length;counter++)
+            {
+              var li=document.createElement("li");
+              var a=document.createElement("a");
+              a.setAttribute("data-toggle","tab");
+              a.innerHTML = data[counter].name;
+              li.appendChild(a);
+              document.getElementById("blog_tab_name").appendChild(li);
+              a.href = "#menu" + counter;
+              var div = document.createElement("div");
+              div.id = "menu" + counter;
+              div.className = "tab-pane fade";
+              var h2 = document.createElement("h2");
+              h2.innerHTML = data[counter].name + " , " + data[counter].email;
+              var p = document.createElement("p");
+              p.innerHTML = data[counter].comment;
+              div.appendChild(h2);
+              div.appendChild(p);
+              document.getElementById("blog_tab").appendChild(div);
+            }
+          }
+        });
+
+
 })
 
 $(function() {
@@ -381,11 +411,19 @@ $(function() {
         data.name = name_blog;
         data.email = email_blog;
         data.comment = comments_blog;
+        var a = document.getElementById("blog_tab");
+          while(a.hasChildNodes()) {
+            a.removeChild(a.lastChild);
+          }
+          var a = document.getElementById("blog_tab_name");
+          while(a.hasChildNodes()) {
+            a.removeChild(a.lastChild);
+          }
         $.ajax({
           type: 'POST',
           data: JSON.stringify(data),
           contentType: 'application/json',
-          url: 'http://localhost:8081/frontend_blog',            
+          url: 'http://localhost:8081/save_frontend_blog',            
           success: function(data) {
             $('#name_blog').val('');
             $('#email_blog').val('');
@@ -394,6 +432,7 @@ $(function() {
             for(var counter = 0; counter <data.length;counter++)
             {
               var li=document.createElement("li");
+              
               var a=document.createElement("a");
               a.href = "#menu" + counter;
               a.setAttribute("data-toggle","tab");
@@ -403,7 +442,16 @@ $(function() {
 
               var div = document.createElement("div");
               div.id = "menu" + counter;
-              div.className = "tab-pane fade";
+              
+              if(counter == 0)
+              {
+                div.className = "tab-pane fade in active";
+                li.className="active";
+              }
+              else
+              {
+                div.className = "tab-pane fade";
+              }
               var h2 = document.createElement("h2");
               h2.innerHTML = data[counter].name + " , " + data[counter].email;
               var p = document.createElement("p");

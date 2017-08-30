@@ -287,7 +287,7 @@ function success(pos) {
 }*/
 
 function error(err) {
-  	alert("Timeout Occurred. Please reload the page");
+  	alert(`${err.code} and message ${err.message}`);
   	//console.log(`${err.code} and message ${err.message}`);
 };
 
@@ -483,8 +483,25 @@ function placeMarker(location) {
         
 		if(map.getZoom() < 15)
 			{map.panTo(marker.position);}
-    	map.setZoom(15);
-    }
+
+        smoothZoom(map, 15, map.getZoom());
+        function smoothZoom (map, max, cnt) {
+            if (cnt > max) {
+                return;
+            }
+            else {
+                z = google.maps.event.addListener(map, 'zoom_changed', function(event){
+                google.maps.event.removeListener(z);
+                smoothZoom(map, max, cnt + 1);
+                });
+                setTimeout(function(){map.setZoom(cnt)}, 200); 
+            }
+        }  
+        //console.log(map.getBounds().contains(marker.getPosition()));
+        if (map.getBounds().contains(marker.getPosition()) == false){
+            map.panTo(marker.position);
+        }
+}
       
 
 

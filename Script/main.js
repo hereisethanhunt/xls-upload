@@ -8,14 +8,13 @@ var path = require("path");
 var bodyParser = require('body-parser');
 app.use(bodyParser());
 
+app.use(express.static(__dirname + './../View/'));
 
-app.use(express.static(__dirname + '/../View'));
-app.use(express.static(__dirname + '/../Script'));
 app.get('/', function(request, response) {
-    response.sendFile('main.html');
+    response.sendFile('index.html');
 });
 app.get('/index', function(request, response) {
-	response.sendFile('index.html');
+	response.sendFile('main.html', {root: './../View'});
 });
 
 
@@ -29,7 +28,7 @@ app.get('/', function(request, response) {
     response.render('main.html');
 });*/
 
-app.post('/frontend_blog', function(request, response) {
+app.post('/save_frontend_blog', function(request, response) {
     
     var BlogInfo = new Blog_Info({
         name : request.body.name,
@@ -39,18 +38,23 @@ app.post('/frontend_blog', function(request, response) {
     BlogInfo.save(function(err) {
         if (!err) {
             console.log('Info saved!');
-            Blog_Info.find({}).sort({_id: -1}).limit(6).exec(function (err, docs) {
-                if (!err){ 
-                    console.log(JSON.stringify(docs));
-                    response.send(docs);
-                } else {throw err;}
-            });
+            response.redirect('/load_frontend_blog');
         } else{ throw err; }
     });
-    console.log("out??");
+    
 });
 
+app.get('/load_frontend_blog', function(request, response) {
 
+    
+    Blog_Info.find({}).sort({_id: -1}).limit(6).exec(function (err, docs) {
+        if (!err){ 
+            console.log(JSON.stringify(docs));
+            response.send(docs);
+        } else {throw err;}
+    });
+    
+});
 
 
 
