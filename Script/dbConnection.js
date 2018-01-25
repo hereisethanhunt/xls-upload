@@ -11,3 +11,5 @@ db.on('error', function (err) {
 db.once('open', function callback () {
   console.log("mongodb labs connected");
 });
+
+module.exports = db;

@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   
   <style>
@@ -25,6 +26,8 @@
   .container {
       padding: 80px 120px;
   }
+
+  /*for display pic of mine*/
   .person {
       border: 10px solid transparent;
       margin-bottom: 25px;
@@ -72,6 +75,9 @@
       margin-top: 15px;
       color: #555;
   }
+
+  /*button design*/
+
   .btn {
       padding: 10px 20px;
       background-color: #333;
@@ -84,6 +90,9 @@
       background-color: #fff;
       color: #000;
   }
+
+  /*modal design*/
+
   .modal-header, h4, .close {
       background-color: #333;
       color: #fff !important;
@@ -96,12 +105,17 @@
   .nav-tabs li a {
       color: #777;
   }
+
+  /*map display*/
+
   #googleMap {
       width: 100%;
       height: 400px;
       -webkit-filter: grayscale(100%);
       filter: grayscale(100%);
   }  
+  /*navigation bar*/
+
   .navbar {
       font-family: Montserrat, sans-serif;
       margin-bottom: 0;
@@ -134,6 +148,8 @@
   .dropdown-menu li a:hover {
       background-color: red !important;
   }
+  /*footer*/
+
   footer {
       background-color: #2d2d30;
       color: #f5f5f5;
@@ -152,7 +168,7 @@
   textarea {
       resize: none;
   }
-
+/*video insert setting*/
   .videoInsert {
     position: absolute; 
     right: 0; 
@@ -165,6 +181,22 @@
     background-size: cover;
     overflow: hidden;
 }
+/*design the default input file upload UI*/
+#upload-photo {
+   opacity: 0;
+   position: absolute;
+   z-index: -1;
+}
+/*modal responsive - increase in size if more data*/
+
+.modal-body{
+    position: relative;
+    display: table; /* This is important */ 
+  
+    width: auto;
+    min-width: 300px;   
+}
+
   </style>
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -184,9 +216,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#myPage">HOME</a></li>
         <li><a href="#about">ABOUT</a></li>
-        <li><a href="#login">LOGIN</a></li>
-        <li><a href="#contact">CONTACT</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
+        <li><a href="#display_table">DISPLAY</a></li>
       </ul>
     </div>
   </div>
@@ -206,8 +236,8 @@
 <!-- Container (The about Section) -->
 <div id="about" class="container text-center">
   <h3>THE CONTENT</h3>
-  <p><em>We love to ease life!</em></p>
-  <p>Life is huge in itself but short to an individual. Some things are dispersed beyond our reach and our efforts are too weak to meet those ends. Technology has made life easier. The more we dive into the depths of technology, we unleash the fruit of ease. We here have brought you closer to your ease by bringing everything on one table so you can easily move your hands around almost everything you need. From nearby restaurant, cafes and bars to medical shops, petrol pumps and grocery shops with direction, precision and ease for you to choose with an efficient UI at the frontend. Reviews about the website is awaited by our visiting customers in our 'BLOG' route. Feel free to give suggestions and improvement features that can be implemented for a better change. 'LOGIN' to the world of laziness @ease your life.</p>
+  <p><em>XLS and XLSX - Upload & Display</em></p>
+  <p>This project involves uploading of xls and xlsx type of extension file to the server. Alongwith uploading to server, we maintain a database of content from these sheets. First upload the file using "Click To Add ExcelSheet" and then click on UPLOAD button. Extensions other than XLS and XLSX will not be updated. We store and name files using Multer. The data is simultaneously shown on the frontend, with the data recently entered plus the data previously in the database. So one can append data of two different spreadsheet containing employee information into one database and show it in the frontend. Along with this, we real time update or delete the information. The frontend has buttons which interract with the backend and AJAX refresh the database showing the updated information.</p>
   <br>
   <div class="row">
     <div class="col-sm-4">
@@ -225,103 +255,45 @@
   </div>
 </div>
 
-<!-- Container (login Section) -->
-<div id="login" class="bg-1">
+<!-- Container (display_table Section) -->
+<div id="display_table" class="bg-1">
   <div class="container">
-    <h3 class="text-center">LOGIN @EASE<hr></h3>
-    <div class="row">
-      <div class="col-sm-6" style="border: 1px solid rgba(255,255,255,0.9); background-image: url('imagelogin.jpg');background-repeat:repeat-y;background-size: 100%;height: 450px;">
-        <form>
-          <br><br>
-          <h3 class="text-center">LOGIN<hr></h3>
-          <br>
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input id="email" type="text" class="form-control" name="username" placeholder="Username">
-          </div>
-          <br>
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-            <input id="password" type="password" class="form-control" name="password" placeholder="Password">
-          </div>
-          <br>
-          <p>Friday 27 November 2015</p>
-          <hr>
-          <button class="btn" id="login_btn">LOG IN @Ease</button>
-        </form>
+
+    <form id ="uploadForm" enctype="multipart/form-data" action="upload" method="post">  
+    <h2 style="margin:0px;padding:0px"><label for="upload-photo"><span class="glyphicon glyphicon-camera"></span>  Click To Add ExcelSheet</label></h2>  <!-- Click to add files -->
+		<input type="file" name="file" id="upload-photo"  /> 
+    <h4 id="filename"></h4>  <!-- Displays the name of the file you uploaded in the frontend -->
+    <button class="btn" type= "submit" name="submit">UPLOAD</button> <!-- This button will upload data and update database and initiate frontend display -->
+    <hr>
+    </form>
+    
+    <div id="create_table"></div>  <!-- The frontend sheet will be displayed here -->
+
+
+  <!--This Modal will be opened when we click on edit button -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit Row</h4>
+        </div>
+        <div class="modal-body" id="modal-body">
+                 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="update_database">Save</button> <!-- This will save changes and interact with backend -->
+        </div>
       </div>
-      <div class="col-sm-6" style="border: 1px solid rgba(255,255,255,0.9); background-image: url('imagesignup.png');background-repeat:repeat-y;background-size: 100% ;height: 450px;">
-        <form>
-          <br><br>  
-          <h3 class="text-center">SIGNUP<hr></h3>
-          <br>
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input id="email" type="text" class="form-control" name="email" placeholder="Email">
-            <input id="email" type="text" class="form-control" name="username" placeholder="Username">
-          </div>
-          <br>
-          <div class="input-group">
-            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-            <input id="password" type="password" class="form-control" name="password" placeholder="Password">
-          </div>
-          <br>
-          <hr style="margin-top: 13px">
-          <button class="btn" id="signup_btn">SIGN UP @Ease</button>
-        </form>
-      </div>
+      
     </div>
+  </div>
+  <!-- Modal -->
   </div>
 </div>
 
-<!-- Container (Contact Section) -->
-<div id="contact" class="container">
-  <h3 class="text-center">Contact</h3>
-  <p class="text-center"><em>We love our fans!</em></p>
-
-  <div class="row">
-    <div class="col-md-4">
-      <p>Fan? Drop a note.</p>
-      <p><span class="glyphicon glyphicon-map-marker"></span>Bangalore, IND</p>
-      <p><span class="glyphicon glyphicon-phone"></span>Phone: +91 8377088616</p>
-      <p><span class="glyphicon glyphicon-envelope"></span>Email: vishalbisht@fico.com</p>
-    </div>
-    <div class="col-md-8">
-      <div class="row">
-        <div class="col-sm-6 form-group">
-          <input class="form-control" id="name_blog" placeholder="Name" type="text" required>
-        </div>
-        <div class="col-sm-6 form-group">
-          <input class="form-control" id="email_blog" placeholder="Email" type="email" required>
-        </div>
-      </div>
-      <textarea class="form-control" id="comments_blog" placeholder="Comment" rows="5"></textarea>
-      <br>
-      <div class="row">
-        <div class="col-md-12 form-group">
-          <button class="btn pull-right" id="submit_blog" type="submit">Send</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <br>
-  <h3 class="text-center">Reviews From You</h3>  
-  <ul class="nav nav-tabs" id="blog_tab_name">
-    <li class="active"><a data-toggle="tab" href="#home">Vishal</a></li>
-    <!-- <li><a data-toggle="tab" href="#menu1">Chandler</a></li> -->
-  </ul>
-
-  <div class="tab-content" id="blog_tab">
-    <div id="home" class="tab-pane fade in active">
-      <h2>Vishal Bisht, Manager</h2>
-      <p>Man, we've been on the road for some time now. Looking forward for some of your suggestions. Feel free.</p>
-    </div>
-    <!-- <div id="menu1" class="tab-pane fade">
-      <h2>Chandler Bing, Guitarist</h2>
-      <p>Always a pleasure people! Hope you enjoyed it as much as I did. Could I BE.. any more pleased?</p>
-    </div> -->
-  </div>
-</div>
 
 <!-- Add Google Maps -->
 <div id="googleMap"></div>
@@ -336,6 +308,7 @@ marker.setMap(map);
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANgGouY4dKW6SQ8UaaNJXxXvJdxLIAZ1E&callback=myMap"></script>
 
+
 <!-- Footer -->
 <footer class="text-center">
   <a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TO TOP">
@@ -344,8 +317,86 @@ marker.setMap(map);
   <p>Website Design Made by Vishal Bisht</p> 
 </footer>
 
+
+
 <script>
+
+// This will display the filename of the uplaoded file. It chops off unwanted part of filename
+
+document.getElementById('upload-photo').onchange = uploadOnChange;
+    
+function uploadOnChange() {
+    var filename = this.value;
+    var lastIndex = filename.lastIndexOf("\\");
+    if (lastIndex >= 0) {
+        filename = filename.substring(lastIndex + 1);
+    }
+    document.getElementById('filename').innerHTML = filename; // Will append in frontend
+}
+
+// When we close the modal, we delete all the content inside the modal box so that next time when we click on edit, it wont append on the previous data
+
+$('.close').click(function() {
+        localStorage.removeItem("editing_document_id"); // this local storage saves the id of the row to be edited. As we have cancelled the editing, we flush out this item
+         var a = document.getElementById("modal-body"); // deletes child nodes of the modal div
+                while(a.hasChildNodes()) {
+                a.removeChild(a.lastChild);
+                    }
+    }); 
+
+// update database . Initiated when Save is clicked during editing of sheets. loop through all modal and fetch the key-value which needs to be updated from modal box 
+
+$('#update_database').click(function() {
+  var key_value ={};
+    var labels= $("#modal-body").find('label');
+    // Loop through all the spans inside this div
+    labels.each(function(){
+      var key = $(this).text();
+        var value =document.getElementById(key).value
+        //alert(value);
+        key_value[key] = value;
+    });
+
+    key_value["_id"] = localStorage.getItem("editing_document_id"); // append _id of the row to be deleted in the data to be sent to backend. we fetch _id from the localstorage where we save the _id to localstorage when we click the row to be edited
+    
+    $.ajax({
+          type: 'GET',
+          contentType: 'application/json',
+          url: 'http://localhost:8081/edit_table',
+          data: key_value,            
+          success: function(response) {
+            console.log(response);
+          }
+        }); 
+        setTimeout(main_table,3000); // display the edited new data from main_table
+        localStorage.removeItem("editing_document_id");  // release the localstorage as task is done
+        var a = document.getElementById("modal-body");  // delete the values inside modal 
+         while(a.hasChildNodes()) {
+                     a.removeChild(a.lastChild);}
+}); 
+
+
+// this function is called when we need to display all data on frontend
+function main_table()
+{
+  $.ajax({
+          type: 'GET',
+          contentType: 'application/json',
+          url: 'http://localhost:8081/display',            
+          success: function(response) {
+            console.log(response);
+              if(!(response.length))
+                {alert("Empty_Data");}
+                else
+                {createTable(response);}
+          }
+        }); 
+}
+
 $(document).ready(function(){
+
+
+main_table();
 
   // Initialize Tooltip
   $('[data-toggle="tooltip"]').tooltip(); 
@@ -368,103 +419,154 @@ $(document).ready(function(){
     } // End if
   });
 
+ 
+// An ajax request initiated when we click on upload input file - "Click To Add ExcelSheet"
+
+  $('#uploadForm').submit(function() {
+        $(this).ajaxSubmit({
+            error: function(xhr) {
+        alert('Error: ');
+            },
+            success: function(response) {
+              console.log(response);
+              if(response.error_code)
+                {alert(response.err_desc);}
+                else
+                {createTable(response);}
+            }
+    });
+    $('#upload-photo').val(""); //we flush the upload so that if we press the "UPLOAD" button twice, only once the data should be shown in frontend (else two or more times if the button works, duplicate data will come in frontend as fetch data will be called those many times)
+// on flushing it, only once can the backend be called from the ajax request given above
+    return false;
+    });    
+});
+
+// This creates the table. It assigns the row with the id of the document(database) , it also assigns the delete button and edit button with the corresponding _id of the document to keep track which row to delete or which row to edit.
+
+function createTable(response)
+{
+  // clear the data on frontend before displaying new appended data
+  var a = document.getElementById("create_table");
+                while(a.hasChildNodes()) {
+                a.removeChild(a.lastChild);
+                    }
+// create table
+  var table = document.createElement("table");
+  table.className = "table table-hover";
+  table.id="table_id";
+
+  var thead = document.createElement("thead");
+  var trh = document.createElement("tr");
+  
+// populate the headers of the table from the data given by database
+  var tdh = document.createElement("td");
+  tdh.innerHTML = "EDIT";
+  trh.appendChild(tdh);
+  Object.keys(response[0]).forEach(function(key) {
+    if(key=="_id")
+      key="DELETE";
+    var tdh = document.createElement("td");
+    tdh.innerHTML = key;
+    trh.appendChild(tdh);     
+  });
+  thead.appendChild(trh);
+
+// populate the body of the table from the data given by database
+  var tbody = document.createElement("tbody");
+  for(var i=0;i< response.length;i++)
+  {
+    var tr = document.createElement("tr");
+    Object.keys(response[i]).forEach(function(key) {
+      var td = document.createElement("td");
+      if(key == "_id")
+      {
+          var span=document.createElement("span");
+          span.id = response[i]._id
+          span.setAttribute('onclick','delete_row(this)');
+          span.className= "glyphicon glyphicon-remove";
+          td.appendChild(span);  
+
+          var td_edit = document.createElement("td");
+          var span_edit=document.createElement("span");
+          span_edit.id = response[i]._id + "_edit"
+          span_edit.setAttribute('data-toggle','modal');
+          span_edit.setAttribute('data-target','#myModal');
+          span_edit.setAttribute('onclick','edit_row(this)');
+          span_edit.className= "glyphicon glyphicon-edit";
+          td_edit.appendChild(span_edit);
+          tr.appendChild(td_edit);
+      }
+      else
+      { td.innerHTML = response[i][key];   }
+      tr.appendChild(td);           
+    });
+    tr.id = response[i]._id + "_table";
+    tbody.appendChild(tr);
+  }
+  table.appendChild(thead);
+  table.appendChild(tbody);
+  document.getElementById("create_table").appendChild(table);
+}
+
+// This deletes the row from the database by using _id of the document
+
+function delete_row(elem){
+  var elemT = document.getElementById(elem.id + "_table");
+  elemT.parentNode.removeChild(elemT);
   $.ajax({
           type: 'GET',
           contentType: 'application/json',
-          url: 'http://localhost:8081/load_frontend_blog',            
-          success: function(data) {
-
-            for(var counter = 0; counter <data.length;counter++)
-            {
-              var li=document.createElement("li");
-              var a=document.createElement("a");
-              a.setAttribute("data-toggle","tab");
-              a.innerHTML = data[counter].name;
-              li.appendChild(a);
-              document.getElementById("blog_tab_name").appendChild(li);
-              a.href = "#menu" + counter;
-              var div = document.createElement("div");
-              div.id = "menu" + counter;
-              div.className = "tab-pane fade";
-              var h2 = document.createElement("h2");
-              h2.innerHTML = data[counter].name + " , " + data[counter].email;
-              var p = document.createElement("p");
-              p.innerHTML = data[counter].comment;
-              div.appendChild(h2);
-              div.appendChild(p);
-              document.getElementById("blog_tab").appendChild(div);
-            }
+          data: elem.id,
+          url: 'http://localhost:8081/deleteRow',            
+          success: function(response) {
+          console.log(response);
+          alert("Row Has been Deleted!!!");
           }
-        });
+  }); 
+ }
+
+// when you click on edit button, this creates a modal and populates the data to be edited from the table to the modal,with labels and input. We can write new data in the input fields
+
+function edit_row(elem){
+
+var row_id = elem.id.split("_")[0] + "_table"; //we get row_id from the id of the edit button (both have _id of document appended )
+localStorage.setItem("editing_document_id",elem.id.split("_")[0]); // this sets the _id of document to a localstorage to know which item to be edited in database
+
+var elemT = document.getElementById(row_id);
+console.log(row_id);
+var count=0;
+var list_head=[];
+$("#table_id thead tr td").each(function() { // extract data from table and populate in modal (header data)
+  if(!(count==1||count==0))
+      {
+        list_head.push($(this).html());
+        console.log($(this).html());
+      }
+      count++;
+});
 
 
-})
+var count_info=0;
+$("#"+row_id+" td").each(function() {  // extract data from table and populate in modal as input fields so that we can edit(body data of table)
+  if(!(count_info==1||count_info==0))
+      {
+        var head_value = list_head.shift();
+        var label = document.createElement("label");
+        label.className="control-label col-sm-2";
+        label.innerHTML = head_value;
+        var div = document.createElement("div");
+        div.className="col-sm-10";
+        var input = document.createElement("input");
+        input.value= $(this).html();
+        input.id= head_value;
+        div.appendChild(input);
+        document.getElementById("modal-body").appendChild(label);
+        document.getElementById("modal-body").appendChild(div);
+      }
+      count_info++;
+});
+}
 
-$(function() {
-    $("#submit_blog").click(function() {
-         
-        var name_blog = document.getElementById("name_blog").value;
-        var email_blog = document.getElementById("email_blog").value;
-        var comments_blog = document.getElementById("comments_blog").value;
-        console.log(name_blog);
-        var data = {};
-        data.name = name_blog;
-        data.email = email_blog;
-        data.comment = comments_blog;
-        var a = document.getElementById("blog_tab");
-          while(a.hasChildNodes()) {
-            a.removeChild(a.lastChild);
-          }
-          var a = document.getElementById("blog_tab_name");
-          while(a.hasChildNodes()) {
-            a.removeChild(a.lastChild);
-          }
-        $.ajax({
-          type: 'POST',
-          data: JSON.stringify(data),
-          contentType: 'application/json',
-          url: 'http://localhost:8081/save_frontend_blog',            
-          success: function(data) {
-            $('#name_blog').val('');
-            $('#email_blog').val('');
-            $('#comments_blog').val('');
-
-            for(var counter = 0; counter <data.length;counter++)
-            {
-              var li=document.createElement("li");
-              
-              var a=document.createElement("a");
-              a.href = "#menu" + counter;
-              a.setAttribute("data-toggle","tab");
-              a.innerHTML = data[counter].name;
-              li.appendChild(a);
-              document.getElementById("blog_tab_name").appendChild(li);
-
-              var div = document.createElement("div");
-              div.id = "menu" + counter;
-              
-              if(counter == 0)
-              {
-                div.className = "tab-pane fade in active";
-                li.className="active";
-              }
-              else
-              {
-                div.className = "tab-pane fade";
-              }
-              var h2 = document.createElement("h2");
-              h2.innerHTML = data[counter].name + " , " + data[counter].email;
-              var p = document.createElement("p");
-              p.innerHTML = data[counter].comment;
-              div.appendChild(h2);
-              div.appendChild(p);
-              document.getElementById("blog_tab").appendChild(div);
-            }
-          }
-        });
-    
-    });
-  });
 </script>
 
 </body>
