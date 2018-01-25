@@ -552,10 +552,10 @@ $("#"+row_id+" td").each(function() {  // extract data from table and populate i
       {
         var head_value = list_head.shift();
         var label = document.createElement("label");
-        label.className="control-label col-sm-2";
+        label.className="control-label col-sm-4";
         label.innerHTML = head_value;
         var div = document.createElement("div");
-        div.className="col-sm-10";
+        div.className="col-sm-8";
         var input = document.createElement("input");
         input.value= $(this).html();
         input.id= head_value;
